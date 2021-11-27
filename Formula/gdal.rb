@@ -5,12 +5,12 @@ class Gdal < Formula
   sha256 "1e8fc8b19c77238c7f4c27857d04857b65d8b7e8050d3aac256d70fa48a21e76"
   license "MIT"
 
-  option "with-libkml", "Use libkml driver instead of the default kml driver"
-
   livecheck do
     url "https://download.osgeo.org/gdal/CURRENT/"
     regex(/href=.*?gdal[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
+
+  option "with-libkml", "Use libkml driver instead of the default kml driver"
 
   bottle do
     sha256 arm64_big_sur: "cf24ff841159ef1e4a4dbcd1c64a543c7c806333fd7ff2ecf9122c1aff2f1560"
@@ -36,7 +36,6 @@ class Gdal < Formula
   depends_on "json-c"
   depends_on "libdap"
   depends_on "libgeotiff"
-  depends_on "yincrash/yincrash/libkml"
   depends_on "libpng"
   depends_on "libpq"
   depends_on "libspatialite"
@@ -54,6 +53,7 @@ class Gdal < Formula
   depends_on "webp"
   depends_on "xerces-c"
   depends_on "xz" # get liblzma compression algorithm library from XZutils
+  depends_on "yincrash/yincrash/libkml"
   depends_on "zstd"
 
   uses_from_macos "curl"
@@ -157,9 +157,7 @@ class Gdal < Formula
       ENV.append "CFLAGS", "-I#{buildpath}/gnm"
     end
 
-    if build.with? "libkml"
-      args << "--with-libkml"
-    end
+    args << "--with-libkml" if build.with? "libkml"
 
     system "./configure", *args
     system "make"
