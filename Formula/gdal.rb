@@ -10,8 +10,6 @@ class Gdal < Formula
     regex(/href=.*?gdal[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
-  option "with-libkml", "Use libkml driver instead of the default kml driver"
-
   bottle do
     sha256 arm64_big_sur: "cf24ff841159ef1e4a4dbcd1c64a543c7c806333fd7ff2ecf9122c1aff2f1560"
     sha256 big_sur:       "1ff27b4aa2b0d3c7f21921703b95fc56d10c111ad824a8a348f8f9571ab1e7a8"
@@ -23,6 +21,8 @@ class Gdal < Formula
     url "https://github.com/OSGeo/gdal.git"
     depends_on "doxygen" => :build
   end
+
+  option "with-libkml", "Use libkml driver instead of the default kml driver"
 
   depends_on "pkg-config" => :build
   depends_on "cfitsio"
