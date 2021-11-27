@@ -5,6 +5,8 @@ class Gdal < Formula
   sha256 "1e8fc8b19c77238c7f4c27857d04857b65d8b7e8050d3aac256d70fa48a21e76"
   license "MIT"
 
+  option "with-libkml", "Use libkml driver instead of the default kml driver"
+
   livecheck do
     url "https://download.osgeo.org/gdal/CURRENT/"
     regex(/href=.*?gdal[._-]v?(\d+(?:\.\d+)+)\.t/i)
@@ -34,6 +36,7 @@ class Gdal < Formula
   depends_on "json-c"
   depends_on "libdap"
   depends_on "libgeotiff"
+  depends_on "yincrash/yincrash/libkml"
   depends_on "libpng"
   depends_on "libpq"
   depends_on "libspatialite"
@@ -152,6 +155,10 @@ class Gdal < Formula
       ENV.append "LDFLAGS", "-L#{buildpath}/.libs"
       # The python build needs gnm headers, which are located in the gnm folder
       ENV.append "CFLAGS", "-I#{buildpath}/gnm"
+    end
+
+    if build.with? "libkml"
+      args << "--with-libkml"
     end
 
     system "./configure", *args
