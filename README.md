@@ -1,4 +1,6 @@
-# Yincrash Yincrash
+# A tap for some stuff
+
+Right now just gdal and libkml (so gdal can use libkml)
 
 ## How do I install these formulae?
 
